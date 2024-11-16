@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:goat_flutter/config/app_config.dart';
+import 'package:goat_flutter/screens/auth/sign_up/sign_up_screen.dart';
 import 'package:goat_flutter/widgets/custom_back_button.dart';
 import '../../../controllers/auth/login/login_controller.dart';
 import '../../../widgets/custom_button.dart';
@@ -15,9 +16,7 @@ class LogInScreen extends StatelessWidget {
 
     return Scaffold(
       appBar: AppBar(
-        leading: const Hero(
-            tag: 'first',
-            child: CustomBackButton()),
+        leading: const Hero(tag: 'first', child: CustomBackButton()),
       ),
       body: SingleChildScrollView(
         child: Padding(
@@ -87,9 +86,7 @@ class LogInScreen extends StatelessWidget {
                             'Forgot Password?',
                             style: TextStyle(
                                 fontSize: 13,
-                                color: Theme.of(context)
-                                    .colorScheme
-                                    .onPrimary,
+                                color: Theme.of(context).colorScheme.onPrimary,
                                 fontWeight: FontWeight.w300),
                           ),
                         ),
@@ -100,14 +97,14 @@ class LogInScreen extends StatelessWidget {
               ),
               const SizedBox(height: 40),
               Obx(() => CustomButton(
-                text: 'L O G I N',
-                onPressed: () {
-                  loginController.loginUser();
-                },
-                backgroundColor: Theme.of(context).colorScheme.primary,
-                isLoading: loginController.isLoggingIn.value,
-                tag: 'onboard',
-              )),
+                    text: 'L O G I N',
+                    onPressed: () {
+                      loginController.loginUser(context);
+                    },
+                    backgroundColor: Theme.of(context).colorScheme.primary,
+                    isLoading: loginController.isLoggingIn.value,
+                    tag: 'onboard',
+                  )),
               const SizedBox(height: 50),
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 20),
@@ -126,14 +123,22 @@ class LogInScreen extends StatelessWidget {
                 ),
               ),
               const SizedBox(height: 30),
-              Center(
-                child: GestureDetector(
-                  child: Text(
-                    'Create an Account',
-                    style: TextStyle(
-                      color: Theme.of(context).colorScheme.onPrimary,
-                      fontSize: 15,
-                      fontWeight: FontWeight.w300,
+              Hero(
+                tag: 'signup',
+                child: Center(
+                  child: GestureDetector(
+                    onTap: () => Get.to(() => const SignUpScreen(),
+                        transition: Transition.cupertino),
+                    child: Material(
+                      color: Colors.transparent,
+                      child: Text(
+                        'Create an Account',
+                        style: TextStyle(
+                          color: Theme.of(context).colorScheme.onPrimary,
+                          fontSize: 15,
+                          fontWeight: FontWeight.w300,
+                        ),
+                      ),
                     ),
                   ),
                 ),

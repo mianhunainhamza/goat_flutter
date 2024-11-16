@@ -56,8 +56,8 @@ class _CustomButtonState extends State<CustomButton> with SingleTickerProviderSt
 
   @override
   Widget build(BuildContext context) {
-    final Color finalBackgroundColor = widget.backgroundColor ?? Theme.of(context).colorScheme.onPrimary;
-    final Color finalTextColor = widget.textColor ?? Theme.of(context).colorScheme.onSecondary;
+    final Color finalBackgroundColor = widget.backgroundColor ?? Theme.of(context).colorScheme.primary;
+    final Color finalTextColor = widget.textColor ?? Theme.of(context).colorScheme.secondary;
 
     return GestureDetector(
       onTap: widget.isLoading
@@ -87,9 +87,14 @@ class _CustomButtonState extends State<CustomButton> with SingleTickerProviderSt
             height: widget.height ?? AppConfig.buttonHeight,
             width: widget.width ?? MediaQuery.of(context).size.width,
             child: widget.isLoading
-                ? CircularProgressIndicator(
-              color: finalTextColor,
-            )
+                ? SizedBox(
+              height: 30,
+                  width: 30,
+                  child: CircularProgressIndicator(
+                                color: finalTextColor,
+                                strokeWidth: 6,
+                              ),
+                )
                 : Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [

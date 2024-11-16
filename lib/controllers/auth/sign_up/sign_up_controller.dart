@@ -1,8 +1,13 @@
-import 'package:get/get.dart';
-import 'package:flutter/material.dart';
+import 'dart:io';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
-import '../../../widgets/custom_snackbar.dart'; // Assuming the custom snackbar is located here
+import 'package:firebase_database/firebase_database.dart';
+import 'package:firebase_storage/firebase_storage.dart';
+import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:image_picker/image_picker.dart';
+import 'package:permission_handler/permission_handler.dart';
+import '../../../models/user/user_model.dart';
+import '../../../widgets/custom_snackbar.dart';
 
 class SignupController extends GetxController {
   var nameController = TextEditingController();
@@ -15,7 +20,8 @@ class SignupController extends GetxController {
   var obscureText = true.obs;
   var isLoading = false.obs;
   var profileImage = Rx<String?>(null);
-  var isAgree = false.obs;
+  final ImagePicker _imagePicker = ImagePicker();
+  var uploadingImage = false.obs;
 
   void togglePasswordVisibility() {
     obscureText.value = !obscureText.value;
@@ -33,27 +39,96 @@ class SignupController extends GetxController {
     return null;
   }
 
-  // Method to handle sign-up logic
-  Future<void> signUp(BuildContext context) async {
-    if (isLoading.value) return;
-    isLoading.value = true;
+  void clearFields() {
+    nameController.clear();
+    phoneController.clear();
+    emailController.clear();
+    addressController.clear();
+    passController.clear();
+    confirmPassController.clear();
+    profileImage.value = null;
+  }
 
-    // Basic validation before proceeding
-    if (nameController.text.isEmpty || phoneController.text.isEmpty || emailController.text.isEmpty || addressController.text.isEmpty) {
+  Future<void> pickImage(BuildContext context) async {
+    // Check for gallery permission
+    if (await Permission.photos.isDenied || await Permission.photos.isPermanentlyDenied) {
+      if (await Permission.photos.request().isDenied) {
+        CustomSnackbar.showSnackBar(
+          'Permission Required',
+          'Gallery access is needed to upload a profile picture',
+          const Icon(Icons.warning_amber),
+          context,
+        );
+        return;
+      }
+    }
+
+    try {
+      final XFile? image = await _imagePicker.pickImage(source: ImageSource.gallery);
+      if (image != null) {
+        File file = File(image.path);
+        CustomSnackbar.showSnackBar(
+          'Uploading',
+          'Uploading your profile picture...',
+          const Icon(Icons.upload),
+          context,
+        );
+
+        String fileName = "profileImages/${DateTime.now().millisecondsSinceEpoch}.jpg";
+        UploadTask uploadTask = FirebaseStorage.instance.ref(fileName).putFile(file);
+
+        TaskSnapshot snapshot = await uploadTask;
+        String downloadUrl = await snapshot.ref.getDownloadURL();
+        profileImage.value = downloadUrl;
+
+        CustomSnackbar.showSnackBar(
+          'Success',
+          'Profile picture uploaded successfully!',
+          const Icon(Icons.check_circle),
+          context,
+        );
+      }
+    } catch (e) {
       CustomSnackbar.showSnackBar(
         'Error',
-        'Please fill all the fields correctly',
+        'Failed to pick or upload image: ${e.toString()}',
+        const Icon(Icons.error),
+        context,
+      );
+    }
+  }
+
+  Future<void> signUp(BuildContext context) async {
+    if (isLoading.value || uploadingImage.value) return;
+
+    if (profileImage.value == null) {
+      CustomSnackbar.showSnackBar(
+        'Error',
+        'Please upload a profile picture',
         const Icon(Icons.warning_amber),
         context,
       );
-      isLoading.value = false;
+      return;
+    }
+    if (!uploadingImage.value) {
+      CustomSnackbar.showSnackBar(
+        'Error',
+        'Wait while uploading image',
+        const Icon(Icons.warning_amber),
+        context,
+      );
       return;
     }
 
-    if (!isAgree.value) {
+    isLoading.value = true;
+
+    if (nameController.text.isEmpty ||
+        phoneController.text.isEmpty ||
+        emailController.text.isEmpty ||
+        addressController.text.isEmpty) {
       CustomSnackbar.showSnackBar(
         'Error',
-        'Please agree to terms and conditions',
+        'Please fill all the fields correctly',
         const Icon(Icons.warning_amber),
         context,
       );
@@ -81,13 +156,22 @@ class SignupController extends GetxController {
         password: password,
       );
 
-      await FirebaseFirestore.instance.collection("users").doc(userCredential.user?.uid).set({
-        'name': nameController.text,
-        'phone': phoneController.text,
-        'email': email,
-        'address': addressController.text,
-        'profileImage': profileImage.value,
-      });
+      DatabaseReference userRef = FirebaseDatabase.instance.ref().child('users').child(userCredential.user?.uid ?? '');
+
+      final userModel = UserModel(
+        userId: FirebaseAuth.instance.currentUser?.uid ?? '',
+        email: email,
+        name: nameController.text,
+        role: 'user',
+        profileImage: profileImage.value!,
+        token: '',
+        enabled: 1,
+        blocked: 0,
+        address: addressController.text,
+        phone: phoneController.text,
+      );
+
+      await userRef.set(userModel.toMap());
 
       CustomSnackbar.showSnackBar(
         'Success',
@@ -96,11 +180,27 @@ class SignupController extends GetxController {
         context,
       );
 
+      clearFields();
       isLoading.value = false;
     } catch (e) {
+      String errorMessage = 'An error occurred';
+
+      if (e is FirebaseAuthException) {
+        switch (e.code) {
+          case 'email-already-in-use':
+            errorMessage = 'Email already exists';
+            break;
+          case 'weak-password':
+            errorMessage = 'Password is too weak';
+            break;
+          default:
+            errorMessage = 'Error: ${e.message}';
+        }
+      }
+
       CustomSnackbar.showSnackBar(
         'Error',
-        e.toString(),
+        errorMessage,
         const Icon(Icons.error),
         context,
       );

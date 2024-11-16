@@ -14,7 +14,7 @@ class BallAnimationState extends State<BallAnimation> with TickerProviderStateMi
   late AnimationController _controller;
   late double ballX, ballY;
   late double velocityX, velocityY;
-  late Color ballColor;
+  // late Color ballColor;
   late double scaleValue;
 
   @override
@@ -29,7 +29,7 @@ class BallAnimationState extends State<BallAnimation> with TickerProviderStateMi
     ballY = Get.height / 2 - widget.ballSize / 2;
     velocityX = 3.0 * (Random().nextBool() ? 1 : -1);
     velocityY = 3.0 * (Random().nextBool() ? 1 : -1);
-    ballColor = Colors.white;
+    // ballColor = Colors.white;
     scaleValue = 1.0;
   }
 
@@ -59,13 +59,13 @@ class BallAnimationState extends State<BallAnimation> with TickerProviderStateMi
 
   void _applyBounceEffect() {
     setState(() {
-      ballColor = Colors.black;
+      // ballColor = Theme.of(context).colorScheme.primary;
 
       scaleValue = 1.2;
     });
     Future.delayed(const Duration(milliseconds: 100), () {
       setState(() {
-        ballColor = Colors.white;
+        // ballColor = Colors.white;
         scaleValue = 1.0;
       });
     });
@@ -93,10 +93,10 @@ class BallAnimationState extends State<BallAnimation> with TickerProviderStateMi
         child: Container(
           width: widget.ballSize,
           height: widget.ballSize,
-          decoration: BoxDecoration(
-            color: ballColor,
+          decoration: const BoxDecoration(
+            // color: ballColor,
             shape: BoxShape.circle,
-            image: const DecorationImage(
+            image: DecorationImage(
               image: AssetImage('assets/images/golf_ball.png'),
               fit: BoxFit.contain,
             ),

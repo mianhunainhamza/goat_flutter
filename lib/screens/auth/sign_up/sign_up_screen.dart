@@ -28,13 +28,17 @@ class SignUpScreen extends StatelessWidget {
               children: [
                 Center(
                   child: GestureDetector(
-                    onTap: () {},
-                    child: CircleAvatar(
+                    onTap: () => controller.pickImage(context),
+                    child: Obx(() => CircleAvatar(
                       radius: 55,
                       backgroundColor: Colors.grey[200],
-                      child: const Icon(Icons.camera_alt,
-                          size: 35, color: Colors.grey),
-                    ),
+                      backgroundImage: controller.profileImage.value != null
+                          ? NetworkImage(controller.profileImage.value!)
+                          : null,
+                      child: controller.profileImage.value == null
+                          ? const Icon(Icons.camera_alt, size: 35, color: Colors.grey)
+                          : null,
+                    )),
                   ),
                 ),
                 const SizedBox(height: 30),
