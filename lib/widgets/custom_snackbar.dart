@@ -3,7 +3,7 @@ import 'package:get/get.dart';
 
 class CustomSnackbar {
   static void showSnackBar(String title, String message, Widget icon,
-      Color color, BuildContext context) {
+      BuildContext context) {
     Get.showSnackbar(
       GetSnackBar(
         borderRadius: 20,
@@ -11,7 +11,7 @@ class CustomSnackbar {
         messageText: ClipRRect(
           borderRadius: BorderRadius.circular(20),
           child: Container(
-            color: color.withOpacity(.7),
+            color: Theme.of(context).colorScheme.secondary.withOpacity(.7),
             padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
             child: Row(
               mainAxisSize: MainAxisSize.min,
@@ -25,7 +25,7 @@ class CustomSnackbar {
                       Text(
                         title,
                         style: TextStyle(
-                          color: Theme.of(context).colorScheme.onPrimary,
+                          color: Theme.of(context).colorScheme.primary,
                           fontWeight: FontWeight.bold,
                         ),
                       ),
@@ -33,7 +33,7 @@ class CustomSnackbar {
                       Text(
                         message,
                         style: TextStyle(
-                          color: Theme.of(context).colorScheme.onPrimary,
+                          color: Theme.of(context).colorScheme.primary,
                         ),
                       ),
                     ],

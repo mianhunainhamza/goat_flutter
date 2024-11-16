@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import '../config/app_config.dart';
+
 class CustomButton extends StatefulWidget {
   final String text;
   final String tag;
@@ -79,10 +81,10 @@ class _CustomButtonState extends State<CustomButton> with SingleTickerProviderSt
           child: Container(
             decoration: BoxDecoration(
               color: finalBackgroundColor,
-              borderRadius: BorderRadius.circular(10),
+              borderRadius: BorderRadius.circular(AppConfig.borderRadius),
             ),
             alignment: Alignment.center,
-            height: widget.height ?? 59,
+            height: widget.height ?? AppConfig.buttonHeight,
             width: widget.width ?? MediaQuery.of(context).size.width,
             child: widget.isLoading
                 ? CircularProgressIndicator(
@@ -97,7 +99,7 @@ class _CustomButtonState extends State<CustomButton> with SingleTickerProviderSt
                     widget.text,
                     style: TextStyle(
                       color: Colors.white,
-                      fontSize:widget.textHeight??  22,
+                      fontSize:widget.textHeight??  AppConfig.subheadingFontSize,
                       letterSpacing: 0.5,
                     ),
                   ),
