@@ -1,8 +1,9 @@
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_database/firebase_database.dart';  // Import Firebase Realtime Database
+import 'package:firebase_database/firebase_database.dart';
 import 'package:get/get.dart';
 import 'package:flutter/material.dart';
-import 'package:goat_flutter/screens/home.dart';
+import 'package:goat_flutter/screens/home/home.dart';
+import 'package:shared_preferences/shared_preferences.dart'; // Import SharedPreferences
 import '../../../widgets/custom_snackbar.dart';
 import '../../user/user_controller.dart';
 
@@ -85,6 +86,11 @@ class LoginController extends GetxController {
         emailController.clear();
         passController.clear();
 
+        // Save login information in SharedPreferences
+        SharedPreferences prefs = await SharedPreferences.getInstance();
+        await prefs.setBool('isLoggedIn', true); // Store login status
+        await prefs.setString('userId', userId); // Store user ID
+
         CustomSnackbar.showSnackBar(
           'Success',
           'Logged in successfully',
@@ -118,6 +124,18 @@ class LoginController extends GetxController {
       );
     } finally {
       isLoggingIn.value = false;
+    }
+  }
+
+  Future<void> checkLoginStatus() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    bool? isLoggedIn = prefs.getBool('isLoggedIn') ?? false;
+
+    if (isLoggedIn) {
+      String? userId = prefs.getString('userId');
+      if (userId != null) {
+        Get.to(() => const HomeScreen());
+      }
     }
   }
 }

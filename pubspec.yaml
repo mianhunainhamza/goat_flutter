@@ -44,6 +44,19 @@ dependencies:
   image_picker:
   permission_handler:
   ionicons:
+  staggered_grid_view_flutter:
+  image_stack:
+  carousel_slider:
+  flutter_staggered_animations:
+  shared_preferences:
+  cached_network_image:
+  intl:
+  shimmer:
+  lottie:
+  flutter_inappwebview:
+  url_launcher:
+  animate_do:
+  swipeable_button_view:
 
 dev_dependencies:
   flutter_test:
@@ -70,6 +83,7 @@ flutter:
   assets:
     - assets/images/
     - assets/fonts/
+    - assets/lottie/
   #   - images/a_dot_ham.jpeg
 
   # An image asset can refer to one or more resolution-specific "variants", see

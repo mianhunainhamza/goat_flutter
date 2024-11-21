@@ -14,9 +14,14 @@ class ThemeConfig {
 
   // Light theme color scheme
   static ColorScheme lightColorScheme = ColorScheme.fromSeed(
+    //primary is for texts, and stuff like that
     primary: Colors.black,
+    //secondary is for areas where it will not be used as a background
     secondary: Colors.white,
-    onPrimary: Colors.black,
+    //its specific for buttons colors
+    tertiary: Colors.green.withOpacity(.7),
+    //its for the Auth Selection screen background (For now only using there)
+    onPrimary: const Color(0xFF008854),
     surface: Colors.white,
     onSurface: Colors.black,
     onSecondary: Colors.black,

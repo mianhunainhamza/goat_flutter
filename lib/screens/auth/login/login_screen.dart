@@ -29,7 +29,7 @@ class LogInScreen extends StatelessWidget {
                     "Login",
                     style: TextStyle(
                       fontSize: 50,
-                      color: Theme.of(context).colorScheme.onPrimary,
+                      color: Theme.of(context).colorScheme.primary,
                       fontWeight: FontWeight.bold,
                       letterSpacing: 2,
                     ),
@@ -43,7 +43,7 @@ class LogInScreen extends StatelessWidget {
                     'Please login to continue',
                     style: TextStyle(
                       fontSize: 15,
-                      color: Theme.of(context).colorScheme.onPrimary,
+                      color: Theme.of(context).colorScheme.primary,
                     ),
                   ),
                 ],
@@ -61,21 +61,23 @@ class LogInScreen extends StatelessWidget {
                       prefixIcon: const Icon(Icons.email),
                     ),
                     const SizedBox(height: 20),
-                    CustomTextField(
-                      controller: loginController.passController,
-                      keyboardType: TextInputType.text,
-                      validator: loginController.passwordValidator,
-                      labelText: 'Password',
-                      obscureText: loginController.obscureText.value,
-                      prefixIcon: const Icon(Icons.lock),
-                      suffixIcon: IconButton(
-                        icon: Icon(
-                          loginController.obscureText.value
-                              ? Icons.visibility_off
-                              : Icons.visibility,
-                          color: Colors.grey,
+                    Obx(
+                      () => CustomTextField(
+                        controller: loginController.passController,
+                        keyboardType: TextInputType.text,
+                        validator: loginController.passwordValidator,
+                        labelText: 'Password',
+                        obscureText: loginController.obscureText.value,
+                        prefixIcon: const Icon(Icons.lock),
+                        suffixIcon: IconButton(
+                          icon: Icon(
+                            loginController.obscureText.value
+                                ? Icons.visibility_off
+                                : Icons.visibility,
+                            color: Colors.grey,
+                          ),
+                          onPressed: loginController.togglePasswordVisibility,
                         ),
-                        onPressed: loginController.togglePasswordVisibility,
                       ),
                     ),
                     Row(
@@ -86,7 +88,7 @@ class LogInScreen extends StatelessWidget {
                             'Forgot Password?',
                             style: TextStyle(
                                 fontSize: 13,
-                                color: Theme.of(context).colorScheme.onPrimary,
+                                color: Theme.of(context).colorScheme.primary,
                                 fontWeight: FontWeight.w300),
                           ),
                         ),
@@ -101,7 +103,6 @@ class LogInScreen extends StatelessWidget {
                     onPressed: () {
                       loginController.loginUser(context);
                     },
-                    backgroundColor: Theme.of(context).colorScheme.primary,
                     isLoading: loginController.isLoggingIn.value,
                     tag: 'onboard',
                   )),
@@ -115,7 +116,7 @@ class LogInScreen extends StatelessWidget {
                     Text(
                       "   OR   ",
                       style: TextStyle(
-                        color: Theme.of(context).colorScheme.onPrimary,
+                        color: Theme.of(context).colorScheme.primary,
                       ),
                     ),
                     const Flexible(child: Divider()),
@@ -134,7 +135,7 @@ class LogInScreen extends StatelessWidget {
                       child: Text(
                         'Create an Account',
                         style: TextStyle(
-                          color: Theme.of(context).colorScheme.onPrimary,
+                          color: Theme.of(context).colorScheme.primary,
                           fontSize: 15,
                           fontWeight: FontWeight.w300,
                         ),

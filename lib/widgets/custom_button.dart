@@ -56,7 +56,7 @@ class _CustomButtonState extends State<CustomButton> with SingleTickerProviderSt
 
   @override
   Widget build(BuildContext context) {
-    final Color finalBackgroundColor = widget.backgroundColor ?? Theme.of(context).colorScheme.primary;
+    final Color finalBackgroundColor = widget.backgroundColor ?? Theme.of(context).colorScheme.tertiary;
     final Color finalTextColor = widget.textColor ?? Theme.of(context).colorScheme.secondary;
 
     return GestureDetector(
@@ -103,7 +103,7 @@ class _CustomButtonState extends State<CustomButton> with SingleTickerProviderSt
                   child: Text(
                     widget.text,
                     style: TextStyle(
-                      color: Colors.white,
+                      color: widget.textColor ?? Colors.white,
                       fontSize:widget.textHeight??  AppConfig.subheadingFontSize,
                       letterSpacing: 0.5,
                     ),

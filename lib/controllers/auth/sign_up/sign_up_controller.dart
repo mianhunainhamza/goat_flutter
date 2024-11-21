@@ -18,6 +18,7 @@ class SignupController extends GetxController {
   var confirmPassController = TextEditingController();
 
   var obscureText = true.obs;
+  final RxString selectedTimeZone = 'Chicago UTC-06:00'.obs;
   var isLoading = false.obs;
   var profileImage = Rx<String?>(null);
   final ImagePicker _imagePicker = ImagePicker();
@@ -39,6 +40,17 @@ class SignupController extends GetxController {
     return null;
   }
 
+  final List<String> timeZones = [
+    'Chicago UTC-06:00',
+    'Atlanta UTC-05:00',
+  ];
+
+  void selectTimeZone(String? value) {
+    if (value != null) {
+      selectedTimeZone.value = value;
+    }
+  }
+
   void clearFields() {
     nameController.clear();
     phoneController.clear();
@@ -51,7 +63,8 @@ class SignupController extends GetxController {
 
   Future<void> pickImage(BuildContext context) async {
     // Check for gallery permission
-    if (await Permission.photos.isDenied || await Permission.photos.isPermanentlyDenied) {
+    if (await Permission.photos.isDenied ||
+        await Permission.photos.isPermanentlyDenied) {
       if (await Permission.photos.request().isDenied) {
         CustomSnackbar.showSnackBar(
           'Permission Required',
@@ -64,7 +77,8 @@ class SignupController extends GetxController {
     }
 
     try {
-      final XFile? image = await _imagePicker.pickImage(source: ImageSource.gallery);
+      final XFile? image =
+          await _imagePicker.pickImage(source: ImageSource.gallery);
       if (image != null) {
         File file = File(image.path);
         CustomSnackbar.showSnackBar(
@@ -74,8 +88,10 @@ class SignupController extends GetxController {
           context,
         );
 
-        String fileName = "profileImages/${DateTime.now().millisecondsSinceEpoch}.jpg";
-        UploadTask uploadTask = FirebaseStorage.instance.ref(fileName).putFile(file);
+        String fileName =
+            "profileImages/${DateTime.now().millisecondsSinceEpoch}.jpg";
+        UploadTask uploadTask =
+            FirebaseStorage.instance.ref(fileName).putFile(file);
 
         TaskSnapshot snapshot = await uploadTask;
         String downloadUrl = await snapshot.ref.getDownloadURL();
@@ -151,12 +167,16 @@ class SignupController extends GetxController {
       final email = emailController.text;
       final password = passController.text;
 
-      UserCredential userCredential = await FirebaseAuth.instance.createUserWithEmailAndPassword(
+      UserCredential userCredential =
+          await FirebaseAuth.instance.createUserWithEmailAndPassword(
         email: email,
         password: password,
       );
 
-      DatabaseReference userRef = FirebaseDatabase.instance.ref().child('users').child(userCredential.user?.uid ?? '');
+      DatabaseReference userRef = FirebaseDatabase.instance
+          .ref()
+          .child('users')
+          .child(userCredential.user?.uid ?? '');
 
       final userModel = UserModel(
         userId: FirebaseAuth.instance.currentUser?.uid ?? '',
@@ -166,9 +186,9 @@ class SignupController extends GetxController {
         profileImage: profileImage.value!,
         token: '',
         enabled: 1,
-        blocked: 0,
         address: addressController.text,
         phone: phoneController.text,
+        timeZone: selectedTimeZone.value,
       );
 
       await userRef.set(userModel.toMap());

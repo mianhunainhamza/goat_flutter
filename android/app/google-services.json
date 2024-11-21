@@ -1,0 +1,119 @@
+{
+  "project_info": {
+    "project_number": "235743143921",
+    "firebase_url": "https://goat-app-751e6-default-rtdb.firebaseio.com",
+    "project_id": "goat-app-751e6",
+    "storage_bucket": "goat-app-751e6.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:235743143921:android:1226a642fa50d6d7fc0650",
+        "android_client_info": {
+          "package_name": "com.app.goatapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "235743143921-7qh966v7s0td5d00es55darrnuunabp4.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD9eXZLHFIIXwBn0tKu5NlEKySS9bt3N7k"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "235743143921-7qh966v7s0td5d00es55darrnuunabp4.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "235743143921-q1rff0l4l4dhpmfvv186car7ger0v5jh.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.munib.GoatApp"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:235743143921:android:10a9cbc5866c6029fc0650",
+        "android_client_info": {
+          "package_name": "com.goatapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "235743143921-7qh966v7s0td5d00es55darrnuunabp4.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD9eXZLHFIIXwBn0tKu5NlEKySS9bt3N7k"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "235743143921-7qh966v7s0td5d00es55darrnuunabp4.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "235743143921-q1rff0l4l4dhpmfvv186car7ger0v5jh.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.munib.GoatApp"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:235743143921:android:2b761bc407e1bd3cfc0650",
+        "android_client_info": {
+          "package_name": "com.golf_on_any_tee.goatApp.goat_flutter.goat_flutter"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "235743143921-7qh966v7s0td5d00es55darrnuunabp4.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD9eXZLHFIIXwBn0tKu5NlEKySS9bt3N7k"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "235743143921-7qh966v7s0td5d00es55darrnuunabp4.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "235743143921-q1rff0l4l4dhpmfvv186car7ger0v5jh.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.munib.GoatApp"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

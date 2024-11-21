@@ -20,11 +20,12 @@ class _AuthSelectionScreenState extends State<AuthSelectionScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        backgroundColor: Theme.of(context).colorScheme.onPrimary,
         leading: const Hero(
             tag: 'first',
             child: CustomBackButton()),
       ),
-      backgroundColor: Theme.of(context).colorScheme.secondary,
+      backgroundColor: Theme.of(context).colorScheme.onPrimary,
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 20),
         child: Stack(

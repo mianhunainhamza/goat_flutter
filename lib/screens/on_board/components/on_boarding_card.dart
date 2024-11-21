@@ -41,7 +41,7 @@ class OnboardingTextCard extends StatelessWidget {
             fontSize: 27,
             fontStyle: FontStyle.italic,
             fontWeight: FontWeight.bold,
-            color: Theme.of(context).colorScheme.onPrimary
+            color: Theme.of(context).colorScheme.primary
           ),
         ),
         const SizedBox(height: 16),
@@ -51,7 +51,7 @@ class OnboardingTextCard extends StatelessWidget {
           style: TextStyle(
             fontFamily: 'Lora',
             fontSize: 14,
-            color: Theme.of(context).colorScheme.onPrimary.withOpacity(.7),
+            color: Theme.of(context).colorScheme.primary.withOpacity(.7),
             fontWeight: FontWeight.w500,
           ),
         ),

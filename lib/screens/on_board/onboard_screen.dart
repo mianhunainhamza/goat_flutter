@@ -6,14 +6,14 @@ import 'components/on_boarding_card.dart';
 import 'components/on_boarding_data.dart';
 import '../../config/app_config.dart';
 
-class OnBoardingScreen extends StatefulWidget {
-  const OnBoardingScreen({super.key});
+class OnboardScreen extends StatefulWidget {
+  const OnboardScreen({super.key});
 
   @override
-  State<OnBoardingScreen> createState() => _OnBoardingScreenState();
+  State<OnboardScreen> createState() => _OnBoardingScreenState();
 }
 
-class _OnBoardingScreenState extends State<OnBoardingScreen> {
+class _OnBoardingScreenState extends State<OnboardScreen> {
   final PageController _pageController1 = PageController(initialPage: 0);
   final PageController _pageController2 = PageController(initialPage: 0);
   int _currentIndex = 0;
@@ -95,8 +95,6 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
               text: _currentIndex == onBoardinglist.length - 1
                   ? 'Get Started'
                   : 'Next',
-              backgroundColor: Theme.of(context).colorScheme.primary,
-              textColor: Theme.of(context).colorScheme.onPrimary,
               isLoading: false,
               tag: 'onboard',
             ),
