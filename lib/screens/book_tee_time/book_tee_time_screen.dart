@@ -86,7 +86,7 @@ class BookTeeTimeScreenState extends State<BookTeeTimeScreen> {
                   )),
               SizedBox(
                 width: Get.width,
-                height: 130,
+                height: 140,
                 child: CustomDatePicker(
                   onDateSelected: (selectedDate) {
                     String formattedDate =
@@ -95,7 +95,7 @@ class BookTeeTimeScreenState extends State<BookTeeTimeScreen> {
                   },
                 ),
               ),
-              const SizedBox(height: 30),
+              const SizedBox(height: 15),
               CustomButton(
                 onPressed: () {
                   Get.to(() => const GolfCourseScreen(),

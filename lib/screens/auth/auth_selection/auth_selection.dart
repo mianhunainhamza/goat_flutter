@@ -49,6 +49,7 @@ class _AuthSelectionScreenState extends State<AuthSelectionScreen> {
                     Get.to(() => const LogInScreen(),transition: Transition.cupertino);
                   },
                   text: 'L O G I N',
+                  backgroundColor: Theme.of(context).colorScheme.tertiary.withOpacity(1),
                   isLoading: isLoading,
                   icon: null,
                   tag: 'onboard',

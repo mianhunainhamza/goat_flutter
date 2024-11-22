@@ -3,11 +3,11 @@ import 'package:get/get.dart';
 import 'package:goat_flutter/screens/on_board/onboard_screen.dart';
 import 'package:goat_flutter/screens/home/home.dart';
 import 'package:firebase_core/firebase_core.dart';
-import 'package:goat_flutter/test2.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'config/app_theme.dart';
 import 'controllers/user/user_controller.dart';
 import 'package:flutter/services.dart';
+import 'package:timezone/data/latest.dart' as tz;
 
 class InitialBinding extends Bindings {
   @override
@@ -17,6 +17,7 @@ class InitialBinding extends Bindings {
 }
 
 void main() async {
+  tz.initializeTimeZones();
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
 

@@ -104,6 +104,7 @@ class _CustomButtonState extends State<CustomButton> with SingleTickerProviderSt
                     widget.text,
                     style: TextStyle(
                       color: widget.textColor ?? Colors.white,
+                      fontWeight: FontWeight.bold,
                       fontSize:widget.textHeight??  AppConfig.subheadingFontSize,
                       letterSpacing: 0.5,
                     ),

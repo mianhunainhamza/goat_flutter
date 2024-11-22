@@ -57,6 +57,7 @@ dependencies:
   url_launcher:
   animate_do:
   swipeable_button_view:
+  timezone:
 
 dev_dependencies:
   flutter_test:

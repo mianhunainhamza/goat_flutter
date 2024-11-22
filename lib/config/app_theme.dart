@@ -19,7 +19,7 @@ class ThemeConfig {
     //secondary is for areas where it will not be used as a background
     secondary: Colors.white,
     //its specific for buttons colors
-    tertiary: Colors.green.withOpacity(.7),
+    tertiary: const Color(0xFF006747).withOpacity(1),
     //its for the Auth Selection screen background (For now only using there)
     onPrimary: const Color(0xFF008854),
     surface: Colors.white,

@@ -4,14 +4,14 @@ import 'package:firebase_database/firebase_database.dart';
 import 'package:goat_flutter/controllers/user/user_controller.dart';
 import 'package:goat_flutter/models/golf_course/golf_course_model.dart';
 import 'package:intl/intl.dart';
-
+import 'package:timezone/timezone.dart' as tz;
 import '../../models/booking/booking_model.dart';
 import '../../models/tee_time/tee_time_model.dart';
 import '../../models/user/user_model.dart';
 import '../../widgets/custom_snackbar.dart';
 
 class BookingsController extends GetxController {
-  var bookingDate = DateFormat('yyyy-MM-dd').format(DateTime.now()).obs;
+  var bookingDate =getBookingDate().obs;
 
   final DatabaseReference _dbRef = FirebaseDatabase.instance.ref('bookings');
   var isSportFullyBookedCache = {}.obs;
@@ -42,6 +42,29 @@ class BookingsController extends GetxController {
     resetBookingData();
   }
 
+  static String getBookingDate() {
+    final UserController userController = Get.find();
+    String userTimeZone  = userController.userModel.value!.timeZone;
+
+    print(userTimeZone);
+
+    String city = userTimeZone.split(' ')[0];
+
+    try {
+      var location = tz.getLocation('America/$city');
+
+      var userDateTime = tz.TZDateTime.now(location);
+
+      print(DateFormat('yyyy-MM-dd').format(userDateTime));
+
+      return DateFormat('yyyy-MM-dd').format(userDateTime);
+    } catch (e) {
+      print('Error: $e');
+      return '';
+    }
+  }
+
+  //logic to add booking
   Future<bool> addBooking({
     required String golfCourseNo,
     required String teeTimeName,
@@ -259,11 +282,15 @@ class BookingsController extends GetxController {
     }
   }
 
-//fetch booking of a golf course
   Future<void> fetchBookings(String golfCourse) async {
     try {
       isLoading.value = true;
-      Query query = _dbRef.orderByChild('golf_course').equalTo(golfCourse);
+
+      // Query to fetch bookings for the golf course
+      Query query = _dbRef
+          .orderByChild('golf_course')
+          .equalTo(golfCourse)
+          .limitToLast(10);
 
       final snapshot = await query.get();
 
@@ -277,6 +304,9 @@ class BookingsController extends GetxController {
             fetchedBookings.add(BookingModel.fromMap(data));
           }
         }
+
+        fetchedBookings.sort((a, b) => b.timeStamp.compareTo(a.timeStamp));
+
         bookings.value = fetchedBookings;
       } else {
         bookings.clear();
@@ -287,6 +317,7 @@ class BookingsController extends GetxController {
       isLoading.value = false;
     }
   }
+
 
   // Filter tee times based on restrictions
   List<String> filterTeeTimes({

@@ -8,6 +8,7 @@ import '../../widgets/custom_button.dart';
 import '../../config/app_config.dart';
 import '../../widgets/custom_back_button.dart';
 import '../show_tee_times/show_tee_times_screen.dart';
+import 'components/build_booking_confirmation_dialog.dart';
 import 'components/build_golf_course_shimmer.dart';
 
 class GolfCourseScreen extends StatelessWidget {
@@ -106,22 +107,16 @@ class GolfCourseScreen extends StatelessWidget {
                                 CustomButton(
                                   height: 40,
                                   textHeight: 14,
-                                  backgroundColor: Theme.of(context)
-                                      .colorScheme
-                                      .tertiary
-                                      .withOpacity(.8),
-                                  text: isFullyBooked
-                                      ? 'Fully Booked'
-                                      : 'Book Now',
+                                  backgroundColor: Theme.of(context).colorScheme.tertiary.withOpacity(.8),
+                                  text: isFullyBooked ? 'Fully Booked' : 'Book Now',
                                   onPressed: isFullyBooked
                                       ? () {}
                                       : () {
-                                          Get.to(
-                                              () => TeeTimesScreen(
-                                                    golfCourseModel: course,
-                                                  ),
-                                              transition: Transition.cupertino);
-                                        },
+                                    showBookingConfirmationDialog(
+                                      context: context,
+                                      golfCourseModel: course,
+                                    );
+                                  },
                                   isLoading: false,
                                   tag: '$index',
                                 ),
