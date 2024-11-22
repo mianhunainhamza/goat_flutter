@@ -7,7 +7,6 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'config/app_theme.dart';
 import 'controllers/user/user_controller.dart';
 import 'package:flutter/services.dart';
-import 'package:timezone/data/latest.dart' as tz;
 
 class InitialBinding extends Bindings {
   @override
@@ -17,7 +16,6 @@ class InitialBinding extends Bindings {
 }
 
 void main() async {
-  tz.initializeTimeZones();
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
 

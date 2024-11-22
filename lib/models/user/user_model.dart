@@ -34,7 +34,7 @@ class UserModel {
       enabled: data['enabled'] ?? 0,
       address: data['address'] ?? '',
       phone: data['phone'] ?? '',
-      timeZone: data['timeZone'] ?? 'Chicago UTC-05:00',
+      timeZone: data['timeZone'] ?? 'Chicago UTC-06:00',
     );
   }
 

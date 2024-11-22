@@ -4,14 +4,13 @@ import 'package:firebase_database/firebase_database.dart';
 import 'package:goat_flutter/controllers/user/user_controller.dart';
 import 'package:goat_flutter/models/golf_course/golf_course_model.dart';
 import 'package:intl/intl.dart';
-import 'package:timezone/timezone.dart' as tz;
 import '../../models/booking/booking_model.dart';
 import '../../models/tee_time/tee_time_model.dart';
 import '../../models/user/user_model.dart';
 import '../../widgets/custom_snackbar.dart';
 
 class BookingsController extends GetxController {
-  var bookingDate =getBookingDate().obs;
+  var bookingDate = getBookingDate().obs;
 
   final DatabaseReference _dbRef = FirebaseDatabase.instance.ref('bookings');
   var isSportFullyBookedCache = {}.obs;
@@ -42,27 +41,46 @@ class BookingsController extends GetxController {
     resetBookingData();
   }
 
+
+
+
+
   static String getBookingDate() {
-    final UserController userController = Get.find();
-    String userTimeZone  = userController.userModel.value!.timeZone;
-
-    print(userTimeZone);
-
-    String city = userTimeZone.split(' ')[0];
-
     try {
-      var location = tz.getLocation('America/$city');
+      final UserController userController = Get.find();
+      String userTimeZone = userController.userModel.value!.timeZone;
+      print(userTimeZone);
 
-      var userDateTime = tz.TZDateTime.now(location);
+      // Extract the UTC offset from the time zone string (e.g., "Chicago UTC-06:00")
+      String offsetStr = userTimeZone.split('UTC')[1].trim();
+      List<String> offsetParts = offsetStr.split(':');
 
-      print(DateFormat('yyyy-MM-dd').format(userDateTime));
+      int offsetHours = int.parse(offsetParts[0]);
+      int offsetMinutes = offsetParts.length > 1 ? int.parse(offsetParts[1]) : 0;
 
-      return DateFormat('yyyy-MM-dd').format(userDateTime);
+      // Get the current UTC time
+      DateTime now = DateTime.now().toUtc();
+
+      // Apply the timezone offset to the current UTC time
+      Duration offsetDuration = Duration(hours: offsetHours, minutes: offsetMinutes);
+      DateTime adjustedDate = now.add(offsetDuration);
+
+      // Print the adjusted DateTime for debugging purposes
+      print(adjustedDate);
+
+      // Return the formatted date in yyyy-MM-dd
+      return DateFormat('yyyy-MM-dd').format(adjustedDate);
     } catch (e) {
       print('Error: $e');
       return '';
     }
   }
+
+
+
+
+
+
 
   //logic to add booking
   Future<bool> addBooking({
